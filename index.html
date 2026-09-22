@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikBoost Real</title>
+<style>
+body{margin:0;background:#090b16;color:#fff;font-family:Arial,sans-serif}.wrap{max-width:520px;margin:auto;padding:22px}
+h1{font-size:34px;text-align:center;background:linear-gradient(90deg,#00f2ea,#ff2d55);-webkit-background-clip:text;color:transparent}
+p{color:#b7bdd4;line-height:1.6}.card{background:#151a2d;border:1px solid #303857;border-radius:20px;padding:20px;margin:16px 0}
+button{width:100%;padding:14px;border:0;border-radius:12px;margin:8px 0;background:linear-gradient(90deg,#00d9d2,#ff2d55);color:#fff;font-weight:700;font-size:16px}
+button.alt{background:#2b3350}pre{white-space:pre-wrap;word-break:break-word;color:#9fffe9}.small{font-size:12px;color:#929bb9}
+</style>
+</head>
+<body><main class="wrap">
+<h1>TikBoost</h1><p style="text-align:center">Real TikTok connection dashboard</p>
+<section class="card"><h2>🔐 TikTok Login</h2><p>Connect using TikTok OAuth. This website never asks for your TikTok password or OTP.</p><button onclick="location.href='/auth/tiktok'">Login with TikTok</button><button class="alt" onclick="loadProfile()">Show My Profile</button><button class="alt" onclick="loadVideos()">Load My Videos</button><button class="alt" onclick="logout()">Logout</button><pre id="output">Status loading...</pre></section>
+<section class="card"><h2>📌 Important</h2><p>Display API access requires TikTok approval and scopes. Content Posting API needs additional approval, configuration, and review; it is not enabled by this starter until you add the required approved posting flow.</p><p class="small">This project does not create fake views, likes, or follows.</p></section>
+</main>
+<script>
+async function call(url, options={}){const r=await fetch(url,options);const j=await r.json().catch(()=>({}));document.getElementById('output').textContent=JSON.stringify(j,null,2);return j}
+async function loadProfile(){await call('/api/profile')}
+async function loadVideos(){await call('/api/videos/list',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})}
+async function logout(){await call('/api/logout',{method:'POST'});location.reload()}
+call('/api/status')
+</script>
+</body></html>
